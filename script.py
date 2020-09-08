@@ -1,4 +1,4 @@
-from datacenter.models import Chastisement, Schoolkid, Mark, Lesson
+from datacenter.models import Chastisement, Schoolkid, Mark, Lesson, Commendation
 
 
 
@@ -28,7 +28,12 @@ def add_lesson(child):
         group_letter=schoolkid_info.group_letter,
         year_of_study=schoolkid_info.year_of_study,
         subject__title='Математика')
-    print(lessons_info)
+    Commendation.objects.create(
+    teacher = lessons_info[0].teacher,
+    subject = lessons_info[0].subject,
+    created = lessons_info[0].date,
+    schoolkid = schoolkid_info,
+    text = 'Хвалю!')
 
 child = 'Фролов Иван Григорьевич'
 add_lesson(child)
