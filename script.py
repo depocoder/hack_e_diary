@@ -27,8 +27,8 @@ def add_lesson(child):
     lessons_info = Lesson.objects.filter(
         group_letter=schoolkid_info.group_letter,
         year_of_study=schoolkid_info.year_of_study,
-        subject__subject__contains='Математика')
-    print(lessons_info.subject)
+        subject__title='Математика')
+    print(lessons_info)
 
 child = 'Фролов Иван Григорьевич'
 add_lesson(child)
