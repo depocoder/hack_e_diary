@@ -104,3 +104,5 @@ while True:
         create_commendation(
             schoolkid_info, a_lesson_for_praise, praise_for_the_lesson)
     break
+    print('Скрипт успешно выполнил работу.',
+        'Не забудьте удалить папку hack_e-diary.')
