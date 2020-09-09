@@ -1,6 +1,5 @@
-from datacenter.models import Chastisement, Schoolkid, Mark, Lesson, Commendation
-from random import choice
-from sys import exit
+from datacenter.models import (
+    Chastisement, Schoolkid, Mark, Lesson, Commendation)
 
 
 def get_schoolkid_info(child_full_name):
@@ -9,7 +8,8 @@ def get_schoolkid_info(child_full_name):
 
 
 def change_bad_mark(schoolkid_info):
-    all_bad_marks = Mark.objects.filter(schoolkid=schoolkid_info, points__in=[2,3])
+    all_bad_marks = Mark.objects.filter(
+        schoolkid=schoolkid_info, points__in=[2, 3])
     for bad_mark in all_bad_marks:
         bad_mark.points = 5
         bad_mark.save()
@@ -28,11 +28,11 @@ def create_commendation(schoolkid_info, a_lesson_for_praise,
         year_of_study=schoolkid_info.year_of_study,
         subject__title=a_lesson_for_praise).order_by('-date').first()
     Commendation.objects.create(
-        teacher = lessons_info.teacher,
-        subject = lessons_info.subject,
-        created = lessons_info.date,
-        schoolkid = schoolkid_info,
-        text = praise_for_the_lesson)
+        teacher=lessons_info.teacher,
+        subject=lessons_info.subject,
+        created=lessons_info.date,
+        schoolkid=schoolkid_info,
+        text=praise_for_the_lesson)
 
 
 while True:
@@ -77,11 +77,10 @@ texts_commendations = [
 while True:
     count_add_commendation = int(input(
         'Введите сколько комментариев похвалы хотите добавить: '))
-        
     for commendation in range(count_add_commendation):
         while True:
             print('Выберите предмет для похвалы.')
-            for num_subject, subject in enumerate(subjects): 
+            for num_subject, subject in enumerate(subjects):
                 print(str(num_subject + 1) + '. ' + subject)
             try:
                 a_lesson_for_praise = subjects[
@@ -91,7 +90,8 @@ while True:
                 continue
             while True:
                 print('Выберите похвалу')
-                for num_commendation, commendation in enumerate(texts_commendations): 
+                for num_commendation, commendation in enumerate(
+                        texts_commendations):
                     print(str(num_commendation + 1) + '. ' + commendation)
                 try:
                     praise_for_the_lesson = texts_commendations[
@@ -101,5 +101,6 @@ while True:
                     continue
                 break
             break
-        create_commendation(schoolkid_info, a_lesson_for_praise, praise_for_the_lesson)
+        create_commendation(
+            schoolkid_info, a_lesson_for_praise, praise_for_the_lesson)
     break
