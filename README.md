@@ -30,4 +30,5 @@ python3 manage.py shell
 import hack_e_diary.script 
 ``` 
 Далее скрипт сам подскажет что вводить.    
-**НЕ ЗАБУДЬТЕ ПОСЛЕ ИСПОЛЬЗОВАНИЯ УДАЛИТЬ ПАПКУ hack_e_diary**
+**НЕ ЗАБУДЬТЕ ПОСЛЕ ИСПОЛЬЗОВАНИЯ УДАЛИТЬ ПАПКУ hack_e_diary**.   
+`rm -rf hack_e_diary`
