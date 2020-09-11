@@ -1,4 +1,4 @@
-# hack_e-diary
+# hack_e_diary
 
 ## Описание проекта.   
 
