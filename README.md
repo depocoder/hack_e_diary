@@ -25,8 +25,9 @@
 ```Bash
 sudo apt-get install git 
 sudo apt-get install python3
-git clone https://github.com/herypank/hack_e-diary
-python3 manage.py shell cat hack_e-diary/script.py 
+git clone https://github.com/herypank/hack_e_diary
+python3 manage.py shell 
+import hack_e_diary.script 
 ``` 
 Далее скрипт сам подскажет что вводить.    
-**НЕ ЗАБУДЬТЕ ПОСЛЕ ИСПОЛЬЗОВАНИЯ УДАЛИТЬ ПАПКУ hack_e-diary**
+**НЕ ЗАБУДЬТЕ ПОСЛЕ ИСПОЛЬЗОВАНИЯ УДАЛИТЬ ПАПКУ hack_e_diary**
