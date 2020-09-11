@@ -1,5 +1,6 @@
 from datacenter.models import (
     Chastisement, Schoolkid, Mark, Lesson, Commendation)
+from sys import exit
 
 
 def get_schoolkid_info(child_full_name):
@@ -37,69 +38,65 @@ def create_commendation(schoolkid_info, a_lesson_for_praise,
         text=praise_for_the_lesson)
 
 
-while True:
-    child = input('Введите ФИО ученика: ')
+def fix_everything(child_full_name):
     try:
-        schoolkid_info = get_schoolkid_info(child)
+        schoolkid_info = get_schoolkid_info(child_full_name)
     except Schoolkid.MultipleObjectsReturned:
-        print('Ошибка найдено слишком много учеников.')
-        continue
+        exit('Ошибка найдено слишком много учеников.')
     except Schoolkid.DoesNotExist:
-        print('Ошибка имя не найдено.')
-        continue
+        exit('Ошибка имя не найдено.')
     print('Ученик найден')
-    break
-remove_chastisements(schoolkid_info)
-change_bad_mark(schoolkid_info)
-texts_commendations = [
-    "Молодец!", "Отлично!", "Хорошо!",
-    "Гораздо лучше, чем я ожидал!",
-    "Ты меня приятно удивил!",
-    "Великолепно!", "Прекрасно!",
-    "Ты меня очень обрадовал!",
-    "Именно этого я давно ждал от тебя!",
-    "Сказано здорово – просто и ясно!",
-    "Ты, как всегда, точен!",
-    "Очень хороший ответ!", "Талантливо!",
-    "Ты сегодня прыгнул выше головы!", "Я поражен!",
-    "Уже существенно лучше!", "Потрясающе!",
-    "Замечательно!", "Прекрасное начало!",
-    "Так держать!", "Ты на верном пути!",
-    "Здорово!", "Это как раз то, что нужно!", "Я тобой горжусь!",
-    "С каждым разом у тебя получается всё лучше!",
-    "Мы с тобой не зря поработали!", "Я вижу, как ты стараешься!",
-    "Ты растешь над собой!", "Ты многое сделал, я это вижу!",
-    "Теперь у тебя точно все получится!"]
-while True:
-    try:
-        count_add_commendation = int(input(
-            'Введите сколько комментариев похвалы хотите добавить: '))
-    except ValueError:
-        print('Ошибка ввода, введите положительное целое число.')
-        continue
-    for commendation in range(count_add_commendation):
-        while True:
-            a_lesson_for_praise = input('Введите предмет для похвалы: ')
+    remove_chastisements(schoolkid_info)
+    change_bad_mark(schoolkid_info)
+    texts_commendations = [
+        "Молодец!", "Отлично!", "Хорошо!",
+        "Гораздо лучше, чем я ожидал!",
+        "Ты меня приятно удивил!",
+        "Великолепно!", "Прекрасно!",
+        "Ты меня очень обрадовал!",
+        "Именно этого я давно ждал от тебя!",
+        "Сказано здорово – просто и ясно!",
+        "Ты, как всегда, точен!",
+        "Очень хороший ответ!", "Талантливо!",
+        "Ты сегодня прыгнул выше головы!", "Я поражен!",
+        "Уже существенно лучше!", "Потрясающе!",
+        "Замечательно!", "Прекрасное начало!",
+        "Так держать!", "Ты на верном пути!",
+        "Здорово!", "Это как раз то, что нужно!", "Я тобой горжусь!",
+        "С каждым разом у тебя получается всё лучше!",
+        "Мы с тобой не зря поработали!", "Я вижу, как ты стараешься!",
+        "Ты растешь над собой!", "Ты многое сделал, я это вижу!",
+        "Теперь у тебя точно все получится!"]
+    while True:
+        try:
+            count_add_commendation = int(input(
+                'Введите сколько комментариев похвалы хотите добавить: '))
+        except ValueError:
+            print('Ошибка ввода, введите положительное целое число.')
+            continue
+        for commendation in range(count_add_commendation):
             while True:
-                print('Выберите похвалу')
-                for num_commendation, commendation in enumerate(
-                        texts_commendations):
-                    print(str(num_commendation + 1) + '. ' + commendation)
+                a_lesson_for_praise = input('Введите предмет для похвалы: ')
+                while True:
+                    print('Выберите похвалу')
+                    for num_commendation, commendation in enumerate(
+                            texts_commendations):
+                        print(str(num_commendation + 1) + '. ' + commendation)
+                    try:
+                        praise_for_the_lesson = texts_commendations[
+                            int(input('Введите номер похвалы: ')) - 1]
+                    except (IndexError, ValueError):
+                        print('Ошибка ввода, попробуйте снова.')
+                        continue
+                    break
                 try:
-                    praise_for_the_lesson = texts_commendations[
-                        int(input('Введите номер похвалы: ')) - 1]
-                except (IndexError, ValueError):
-                    print('Ошибка ввода, попробуйте снова.')
+                    create_commendation(
+                        schoolkid_info, a_lesson_for_praise, praise_for_the_lesson)
+                except AttributeError:
+                    print('Ошибка названия предмета. Пример правильного ввода "Краеведение".')
                     continue
                 break
-            try:
-                create_commendation(
-                    schoolkid_info, a_lesson_for_praise, praise_for_the_lesson)
-            except AttributeError:
-                print('Ошибка названия предмета. Пример правильного ввода "Краеведение".')
-                continue
-            break
-        print('Похвала успешно добавлена.')
-    break
-print('Скрипт успешно выполнил работу.',
-      'Не забудьте удалить папку hack_e-diary.')
+            print('Похвала успешно добавлена.')
+        break
+    print('Скрипт успешно выполнил работу.',
+        'Не забудьте удалить папку hack_e-diary.')
