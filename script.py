@@ -88,7 +88,7 @@ while True:
                 try:
                     praise_for_the_lesson = texts_commendations[
                         int(input('Введите номер похвалы: ')) - 1]
-                except:
+                except (IndexError, ValueError):
                     print('Ошибка ввода, попробуйте снова.')
                     continue
                 break
@@ -96,7 +96,7 @@ while True:
                 create_commendation(
                     schoolkid_info, a_lesson_for_praise, praise_for_the_lesson)
             except AttributeError:
-                print('Ошибка названия предмета. Пример правильного ввода "Краеведение"')
+                print('Ошибка названия предмета. Пример правильного ввода "Краеведение".')
                 continue
             break
         print('Похвала успешно добавлена.')
