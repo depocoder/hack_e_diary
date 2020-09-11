@@ -27,8 +27,10 @@ sudo apt-get install git
 sudo apt-get install python3
 git clone https://github.com/herypank/hack_e_diary
 python3 manage.py shell 
-import hack_e_diary.script 
+from hack_e_diary.script import fix_everything
+fix_everything("")
 ``` 
+*В кавычках указываете ФИО, например "Фролов Иван".*
 Далее скрипт сам подскажет что вводить.    
 **НЕ ЗАБУДЬТЕ ПОСЛЕ ИСПОЛЬЗОВАНИЯ УДАЛИТЬ ПАПКУ hack_e_diary**.   
 `rm -rf hack_e_diary`
