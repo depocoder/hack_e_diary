@@ -27,6 +27,8 @@ def create_commendation(schoolkid_info, a_lesson_for_praise,
         group_letter=schoolkid_info.group_letter,
         year_of_study=schoolkid_info.year_of_study,
         subject__title=a_lesson_for_praise).order_by('-date').first()
+    if lessons_info is None:
+        raise AttributeError
     Commendation.objects.create(
         teacher=lessons_info.teacher,
         subject=lessons_info.subject,
@@ -49,12 +51,6 @@ while True:
     break
 remove_chastisements(schoolkid_info)
 change_bad_mark(schoolkid_info)
-subjects = [
-    'Основы безопасности жизнедеятельности (ОБЖ)',
-    'История', 'Биология', 'Иностранный язык', 'Обществознание',
-    'Литература', 'Русский язык', 'Технология',
-    'Изобразительное искусство', 'Музыка', 'Математика',
-    'География', 'Краеведение']
 texts_commendations = [
     "Молодец!", "Отлично!", "Хорошо!",
     "Гораздо лучше, чем я ожидал!",
@@ -75,19 +71,15 @@ texts_commendations = [
     "Ты растешь над собой!", "Ты многое сделал, я это вижу!",
     "Теперь у тебя точно все получится!"]
 while True:
-    count_add_commendation = int(input(
-        'Введите сколько комментариев похвалы хотите добавить: '))
+    try:
+        count_add_commendation = int(input(
+            'Введите сколько комментариев похвалы хотите добавить: '))
+    except ValueError:
+        print('Ошибка ввода, введите положительное целое число.')
+        continue
     for commendation in range(count_add_commendation):
         while True:
-            print('Выберите предмет для похвалы.')
-            for num_subject, subject in enumerate(subjects):
-                print(str(num_subject + 1) + '. ' + subject)
-            try:
-                a_lesson_for_praise = subjects[
-                    int(input('Введите номер урока: ')) - 1]
-            except:
-                print('Ошибка ввода, попробуйте снова.')
-                continue
+            a_lesson_for_praise = input('Введите предмет для похвалы: ')
             while True:
                 print('Выберите похвалу')
                 for num_commendation, commendation in enumerate(
@@ -100,9 +92,14 @@ while True:
                     print('Ошибка ввода, попробуйте снова.')
                     continue
                 break
+            try:
+                create_commendation(
+                    schoolkid_info, a_lesson_for_praise, praise_for_the_lesson)
+            except AttributeError:
+                print('Ошибка названия предмета. Пример правильного ввода "Краеведение"')
+                continue
             break
-        create_commendation(
-            schoolkid_info, a_lesson_for_praise, praise_for_the_lesson)
+        print('Похвала успешно добавлена.')
     break
-    print('Скрипт успешно выполнил работу.',
-        'Не забудьте удалить папку hack_e-diary.')
+print('Скрипт успешно выполнил работу.',
+    'Не забудьте удалить папку hack_e-diary.')
