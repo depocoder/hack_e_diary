@@ -67,36 +67,27 @@ def fix_everything(child_full_name):
         "Мы с тобой не зря поработали!", "Я вижу, как ты стараешься!",
         "Ты растешь над собой!", "Ты многое сделал, я это вижу!",
         "Теперь у тебя точно все получится!"]
-    while True:
+    try:
+        count_add_commendation = int(input(
+            'Введите сколько комментариев похвалы хотите добавить: '))
+    except ValueError:
+        exit('Ошибка ввода, введите положительное целое число.')
+    for commendation in range(count_add_commendation):
+        a_lesson_for_praise = input('Введите предмет для похвалы: ')
+        print('Выберите похвалу')
+        for num_commendation, commendation in enumerate(
+                texts_commendations):
+            print(str(num_commendation + 1) + '. ' + commendation)
         try:
-            count_add_commendation = int(input(
-                'Введите сколько комментариев похвалы хотите добавить: '))
-        except ValueError:
-            print('Ошибка ввода, введите положительное целое число.')
-            continue
-        for commendation in range(count_add_commendation):
-            while True:
-                a_lesson_for_praise = input('Введите предмет для похвалы: ')
-                while True:
-                    print('Выберите похвалу')
-                    for num_commendation, commendation in enumerate(
-                            texts_commendations):
-                        print(str(num_commendation + 1) + '. ' + commendation)
-                    try:
-                        praise_for_the_lesson = texts_commendations[
-                            int(input('Введите номер похвалы: ')) - 1]
-                    except (IndexError, ValueError):
-                        print('Ошибка ввода, попробуйте снова.')
-                        continue
-                    break
-                try:
-                    create_commendation(
-                        schoolkid_info, a_lesson_for_praise, praise_for_the_lesson)
-                except AttributeError:
-                    print('Ошибка названия предмета. Пример правильного ввода "Краеведение".')
-                    continue
-                break
-            print('Похвала успешно добавлена.')
-        break
+            praise_for_the_lesson = texts_commendations[
+                int(input('Введите номер похвалы: ')) - 1]
+        except (IndexError, ValueError):
+            exit('Ошибка ввода, попробуйте снова.')
+        try:
+            create_commendation(
+                schoolkid_info, a_lesson_for_praise, praise_for_the_lesson)
+        except AttributeError:
+            exit('Ошибка названия предмета. Пример правильного ввода "Краеведение".')
+        print('Похвала успешно добавлена.')
     print('Скрипт успешно выполнил работу.',
         'Не забудьте удалить папку hack_e-diary.')
